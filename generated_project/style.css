@@ -1,0 +1,145 @@
+/*
+  Simple CSS Reset & Global Box Sizing
+*/
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 16px;
+  background-color: #f0f2f5;
+}
+
+/* --------------------------------------------------- */
+/* Calculator Container
+   - max‑width 400px, centered, subtle shadow, rounded corners
+*/
+#calculator {
+  max-width: 400px;
+  margin: 2rem auto;               /* center horizontally with vertical spacing */
+  padding: 1rem;
+  background: #fafafa;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* --------------------------------------------------- */
+/* Display – the read‑only input field
+   - full width, large right‑aligned text, padding, no outline on focus
+*/
+.display {
+  width: 100%;
+  font-size: 2rem;
+  text-align: right;
+  padding: 0.5rem 0.75rem;
+  border: none;
+  border-radius: 8px;
+  background: #fff;
+  margin-bottom: 1rem;
+}
+
+.display:focus {
+  outline: none;   /* remove the default blue outline */
+}
+
+/* --------------------------------------------------- */
+/* Buttons Grid – CSS Grid layout (4 columns) */
+.buttons {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.5rem;
+}
+
+/* --------------------------------------------------- */
+/* Base button styling */
+.btn {
+  background: #e0e0e0;
+  color: #000;
+  font-size: 1.25rem;
+  padding: 0.75rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+}
+
+.btn:hover,
+.btn:focus {
+  background: #d5d5d5;
+  outline: none;
+  transform: scale(0.98);
+}
+
+/* --------------------------------------------------- */
+/* Specific button types */
+.operator {
+  background: #ff9500;
+  color: #fff;
+}
+
+.operator:hover,
+.operator:focus {
+  background: #e08900;
+}
+
+.equals {
+  background: #34c759;
+  color: #fff;
+}
+
+.equals:hover,
+.equals:focus {
+  background: #28a745;
+}
+
+.clear {
+  background: #ff3b30;
+  color: #fff;
+}
+
+.clear:hover,
+.clear:focus {
+  background: #e02e24;
+}
+
+.delete {
+  background: #c7c7c7;
+  color: #000;
+}
+
+.delete:hover,
+.delete:focus {
+  background: #b0b0b0;
+}
+
+/* Optional active state used by script.js */
+.btn.active {
+  background: #a0a0a0;
+}
+
+/* --------------------------------------------------- */
+/* Responsive adjustments for small screens (< 500px) */
+@media (max-width: 500px) {
+  #calculator {
+    max-width: 100%;
+    margin: 0.5rem;
+    padding: 0.5rem;
+  }
+
+  .display {
+    font-size: 1.5rem;
+    padding: 0.4rem 0.6rem;
+  }
+
+  .btn {
+    font-size: 1rem;
+    padding: 0.6rem;
+  }
+
+  .buttons {
+    gap: 0.4rem;
+  }
+}

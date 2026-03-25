@@ -1,7 +1,9 @@
 import argparse
 import sys
 import traceback
+from dotenv import load_dotenv
 
+load_dotenv()
 from agent.graph import agent
 
 

@@ -1,40 +1,22 @@
+<!-- Simple registration page with a form for user sign-up -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calculator</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="script.js" defer></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simple Registration Page</title>
 </head>
 <body>
-    <div id="calculator" class="calculator">
-        <input type="text" id="display" class="display" readonly aria-label="Calculator display" />
-        <div class="buttons">
-            <!-- Row 1 -->
-            <button type="button" class="btn clear" id="btn-clear" data-action="clear" aria-label="Clear">C</button>
-            <button type="button" class="btn delete" id="btn-backspace" data-action="backspace" aria-label="Backspace">⌫</button>
-            <button type="button" class="btn operator" id="btn-divide" data-action="divide" aria-label="Divide">/</button>
-            <button type="button" class="btn operator" id="btn-multiply" data-action="multiply" aria-label="Multiply">*</button>
-            <!-- Row 2 -->
-            <button type="button" class="btn" id="btn-7" data-action="digit" aria-label="Seven">7</button>
-            <button type="button" class="btn" id="btn-8" data-action="digit" aria-label="Eight">8</button>
-            <button type="button" class="btn" id="btn-9" data-action="digit" aria-label="Nine">9</button>
-            <button type="button" class="btn operator" id="btn-subtract" data-action="subtract" aria-label="Subtract">-</button>
-            <!-- Row 3 -->
-            <button type="button" class="btn" id="btn-4" data-action="digit" aria-label="Four">4</button>
-            <button type="button" class="btn" id="btn-5" data-action="digit" aria-label="Five">5</button>
-            <button type="button" class="btn" id="btn-6" data-action="digit" aria-label="Six">6</button>
-            <button type="button" class="btn operator" id="btn-add" data-action="add" aria-label="Add">+</button>
-            <!-- Row 4 -->
-            <button type="button" class="btn" id="btn-1" data-action="digit" aria-label="One">1</button>
-            <button type="button" class="btn" id="btn-2" data-action="digit" aria-label="Two">2</button>
-            <button type="button" class="btn" id="btn-3" data-action="digit" aria-label="Three">3</button>
-            <button type="button" class="btn equals" id="btn-equals" data-action="equals" aria-label="Equals">=</button>
-            <!-- Row 5 -->
-            <button type="button" class="btn" id="btn-0" data-action="digit" aria-label="Zero">0</button>
-            <button type="button" class="btn" id="btn-decimal" data-action="decimal" aria-label="Decimal point">.</button>
-        </div>
-    </div>
+  <div style="max-width:400px;margin:auto;padding:20px;border:1px solid #ccc;">
+    <!-- Registration form will be inserted here -->
+    <form method="post" action="#">
+      <label for="fullName">Full Name</label>
+      <input type="text" id="fullName" name="fullName" required style="width:100%;margin-bottom:10px;">
+      <!-- Input fields will be added here in subsequent tasks -->
+      <label for="confirmPassword">Confirm Password</label>
+      <input type="password" id="confirmPassword" name="confirmPassword" required minlength="8" style="width:100%;margin-bottom:10px;">
+      <button type="submit" style="width:100%;padding:10px;background:#4CAF50;color:white;border:none;cursor:pointer;">Register</button>
+    </form>
+  </div>
 </body>
 </html>

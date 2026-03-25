@@ -20,6 +20,13 @@ def main():
             {"user_prompt": user_prompt},
             {"recursion_limit": args.recursion_limit}
         )
+        print("\n==== MEMORY LOGS ====")
+
+        if "coder_state" in result:
+            for log in result["coder_state"].logs:
+                print(log)
+        else:
+            print("No memory logs found ❌")
         print("Final State:", result)
     except KeyboardInterrupt:
         print("\nOperation cancelled by user.")

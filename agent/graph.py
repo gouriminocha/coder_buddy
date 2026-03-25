@@ -7,14 +7,14 @@ from langgraph.prebuilt import create_react_agent
 
 from agent.prompts import *
 from agent.states import *
-from agent.tools import write_file, read_file, BASE_PROJECT_ROOT, list_file
+from agent.tools import write_file, read_file, list_file, BASE_PROJECT_ROOT
 
 _ = load_dotenv()
 
-set_debug(True)
-set_verbose(True)
+set_debug(False)
+set_verbose(False)
 
-llm = ChatGroq(model="openai/gpt-oss-120b")
+llm = ChatGroq(model="openai/gpt-oss-120b", temperature=0)
 
 
 # 🧠 PLANNER
@@ -31,7 +31,11 @@ def planner_agent(state: dict) -> dict:
 
     return {
         "plan": resp,
-        "project_root": str(project_root)
+        "project_root": str(project_root),
+        "logs": [
+            f"User prompt: {user_prompt}",
+            f"Plan created: {resp.name}"
+        ]
     }
 
 
@@ -50,8 +54,11 @@ def architect_agent(state: dict) -> dict:
     print(resp.model_dump_json())
 
     return {
+        **state,
         "task_plan": resp,
-        "project_root": state["project_root"]  # ✅ KEEP IT
+        "logs": state.get("logs", []) + [
+            f"Architect created {len(resp.implementation_steps)} steps"
+        ]
     }
 
 
@@ -63,17 +70,23 @@ def coder_agent(state: dict) -> dict:
         coder_state = CoderState(
             task_plan=state["task_plan"],
             current_step_idx=0,
-            project_root=state["project_root"]  # ✅ IMPORTANT
+            project_root=state["project_root"],
+            logs=state.get("logs", [])
         )
 
     steps = coder_state.task_plan.implementation_steps
 
     if coder_state.current_step_idx >= len(steps):
+        coder_state.logs.append("All steps completed successfully ✅")
         return {"coder_state": coder_state, "status": "DONE"}
 
     current_task = steps[coder_state.current_step_idx]
 
-    # ✅ FIXED read_file call
+    # ✅ LOG START
+    log_msg = f"Step {coder_state.current_step_idx}: Working on {current_task.filepath}"
+    print(log_msg)
+    coder_state.logs.append(log_msg)
+
     existing_content = read_file.run({
         "path": current_task.filepath,
         "project_root": coder_state.project_root
@@ -81,17 +94,15 @@ def coder_agent(state: dict) -> dict:
 
     system_prompt = coder_system_prompt()
 
-    # ✅ VERY IMPORTANT: pass project_root in prompt
     user_prompt = (
         f"Task: {current_task.task_description}\n"
         f"File: {current_task.filepath}\n"
         f"Project root: {coder_state.project_root}\n"
         f"Existing content:\n{existing_content}\n"
-        "Use write_file(path, content, project_root) to save your changes."
+        "Use write_file(path, content, project_root)"
     )
 
     coder_tools = [read_file, write_file, list_file]
-
     react_agent = create_react_agent(llm, coder_tools)
 
     react_agent.invoke({
@@ -100,6 +111,9 @@ def coder_agent(state: dict) -> dict:
             {"role": "user", "content": user_prompt}
         ]
     })
+
+    # ✅ LOG COMPLETE
+    coder_state.logs.append(f"Completed: {current_task.filepath}")
 
     coder_state.current_step_idx += 1
 

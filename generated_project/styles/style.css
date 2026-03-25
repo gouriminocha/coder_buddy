@@ -1,0 +1,236 @@
+/*
+ * Custom stylesheet for personal webpage
+ * Implements theme variables, layout, typography, responsiveness, and utility classes.
+ */
+
+/* ---------------------------------------------------
+ * Theme variables – light (default) and dark
+ * --------------------------------------------------- */
+:root {
+  /* Light theme */
+  --bg-color: #ffffff;
+  --text-color: #222222;
+  --primary-color: #0066ff;
+  --link-color: #0066ff;
+  --nav-bg: #f8f8f8;
+  --nav-hover: #e0e0e0;
+  --footer-bg: #f0f0f0;
+}
+
+/* Dark theme – activated by setting data-theme="dark" on <html> */
+html[data-theme="dark"] {
+  --bg-color: #121212;
+  --text-color: #e0e0e0;
+  --primary-color: #bb86fc;
+  --link-color: #bb86fc;
+  --nav-bg: #1e1e1e;
+  --nav-hover: #333333;
+  --footer-bg: #1a1a1a;
+}
+
+/* ---------------------------------------------------
+ * Base styles
+ * --------------------------------------------------- */
+html {
+  box-sizing: border-box;
+  font-family: 'Roboto', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+*, *::before, *::after {
+  box-sizing: inherit;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  font-size: 1rem;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* ---------------------------------------------------
+ * Sticky header / navigation
+ * --------------------------------------------------- */
+#navbar {
+  position: sticky;
+  top: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--nav-bg);
+  padding: 0.5rem 1rem;
+  z-index: 1000;
+}
+
+/* Fallback – style the existing nav element */
+header nav {
+  position: sticky;
+  top: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--nav-bg);
+  padding: 0.5rem 1rem;
+  width: 100%;
+}
+
+header nav ul {
+  list-style: none;
+  display: flex;
+  gap: 1rem;
+}
+
+header nav a {
+  text-decoration: none;
+  color: var(--text-color);
+  padding: 0.5rem 0.75rem;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+header nav a:hover,
+header nav a:focus {
+  background-color: var(--nav-hover);
+  color: var(--primary-color);
+}
+
+/* ---------------------------------------------------
+ * Hero section – mapped to #home
+ * --------------------------------------------------- */
+.hero, #home {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 4rem 1rem;
+  background: var(--bg-color) url('../assets/hero-bg.jpg') center/cover no-repeat;
+  color: var(--text-color);
+}
+
+/* ---------------------------------------------------
+ * Skills list – mapped to .skills
+ * --------------------------------------------------- */
+.skills-list, .skills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+.skills-list li,
+.skills li {
+  background: var(--nav-bg);
+  padding: 0.5rem 1rem;
+  border-radius: 0.25rem;
+}
+
+/* ---------------------------------------------------
+ * Projects grid – mapped to .gallery
+ * --------------------------------------------------- */
+.projects-grid, .gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
+  padding: 1rem;
+}
+
+/* ---------------------------------------------------
+ * Footer & theme toggle button
+ * --------------------------------------------------- */
+footer {
+  margin-top: auto;
+  padding: 1rem;
+  text-align: center;
+  background: var(--footer-bg);
+}
+
+#theme-toggle {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: var(--text-color);
+  transition: color 0.3s ease;
+}
+
+#theme-toggle::before {
+  content: "\2600"; /* sun */
+}
+html[data-theme="dark"] #theme-toggle::before {
+  content: "\1F319"; /* moon */
+}
+
+#theme-toggle:hover {
+  color: var(--primary-color);
+}
+
+/* ---------------------------------------------------
+ * Utility spacing classes
+ * --------------------------------------------------- */
+.mt-1 { margin-top: 0.25rem; }
+.mt-2 { margin-top: 0.5rem; }
+.mt-3 { margin-top: 1rem; }
+.mb-1 { margin-bottom: 0.25rem; }
+.mb-2 { margin-bottom: 0.5rem; }
+.mb-3 { margin-bottom: 1rem; }
+.p-1 { padding: 0.25rem; }
+.p-2 { padding: 0.5rem; }
+.p-3 { padding: 1rem; }
+
+/* ---------------------------------------------------
+ * Responsive breakpoints
+ * --------------------------------------------------- */
+/* Tablet – max-width 992px */
+@media (max-width: 992px) {
+  .hero, #home {
+    padding: 3rem 1rem;
+  }
+  header nav ul {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .projects-grid, .gallery {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  }
+}
+
+/* Mobile – max-width 600px */
+@media (max-width: 600px) {
+  .hero, #home {
+    padding: 2rem 0.5rem;
+  }
+  header nav ul {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .projects-grid, .gallery {
+    grid-template-columns: 1fr;
+  }
+  .skills-list, .skills {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+
+/* ---------------------------------------------------
+ * Links – ensure contrast
+ * --------------------------------------------------- */
+a {
+  color: var(--link-color);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}

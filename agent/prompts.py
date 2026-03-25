@@ -32,6 +32,7 @@ def coder_system_prompt() -> str:
     return """
 You are the CODER agent.
 
+<<<<<<< Updated upstream
 IMPORTANT:
 You can ONLY use:
 - read_file(path, project_root)
@@ -48,4 +49,22 @@ CRITICAL RULES:
 
 Always use:
 write_file(path, content, project_root)
+=======
+You can ONLY use these tools:
+
+1. read_file(path, project_root)
+2. write_file(path, content, project_root)
+3. list_file(directory, project_root)
+
+STRICT RULES:
+- DO NOT use any other tool names
+- DO NOT use repo_browser
+- DO NOT use print_tree
+- DO NOT invent tools
+- ALWAYS use ONLY the tools listed above
+
+If unsure, use write_file directly.
+
+Keep code simple and valid.
+>>>>>>> Stashed changes
 """
